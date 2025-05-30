@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Encuentelo</title>
+    <link href="./static/style.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Encuentelo</h1>
+    </header>
+    <div class="container">
+        <form method="get" action="/" class="telobusca">
+            <h3>Buscar Telo</h3>
+            <input type="text" name="nombre" placeholder="Por Nombre" value="{{ request.args.get('nombre', '') }}">
+            <input type="text" name="barrio" placeholder="Por Barrio" value="{{ request.args.get('barrio', '') }}">
+            <button type="submit">buscar</button>
+        </form>
+
+        <h2>Resultados</h2>
+        <h6>Código de precios: 1 = $ / 2 = $$ / 3 = $$$ </h6>
+
+        <div class="resultados">
+                {% if hoteles %}
+                    <ul class="grid--container">
+                        {% for hotel in hoteles %}
+                            <li class="hotel--card">
+                                <img src="{{ hotel.imagen }}" alt="Logo de {{ hotel.nombre }}" width="120">
+                                <h4><strong>{{ hotel.nombre }}</strong><br></h4>
+                                <p class="location">Barrio: {{ hotel.barrio }}<br></p>
+                                <p class="price">Precio: {{ hotel.precio_nivel }}<br></p>
+                                <a href="{{ hotel.link }}" target="_blank" class="link--button">Ver más</a>
+                                <a href="{{ hotel.google_maps_url }}" target="_blank" class="map--button">Mapa</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No se encontraron resultados.</p>
+                {% endif %}
+        </div>
+    </div>
+    <footer>
+        <p class="copy">Encuentelo - Buscador de albergues transitorios. <br>2025 - D&D: <a href="https://franciscofernandez.netlify.app">Francisco Fernández</a> para <b><a href="https://ndzvisual.netlify.app">NDZ Visual</a></b></p> 
+    </footer>
+</body>
+</html>

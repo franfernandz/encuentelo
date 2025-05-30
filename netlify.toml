@@ -1,0 +1,26 @@
+[build]
+  # Command to build your site (install dependencies)
+  command = "pip install -r requirements.txt"
+  # Directory (relative to root) that contains your deploy-ready functions
+  functions = "netlify/functions"
+  # Directory (relative to root) that Netlify will publish (for static assets, if any not served by Flask)
+  # Since Flask serves templates and static files itself via the function,
+  # this can be minimal or point to your static folder if you want Netlify to serve some assets directly.
+  # For this setup, it's less critical as the function handles everything.
+  publish = "." # Or "static/" if you want Netlify to manage static assets separately
+
+[functions]
+  # Make sure these files and directories are bundled with the function.
+  # Paths are relative to the project root.
+  included_files = [
+    "app.py",
+    "templates/**",
+    "static/**",
+    "data/**"
+  ]
+
+[[redirects]]
+  # Route all requests to our main Netlify function
+  from = "/*"
+  to = "/.netlify/functions/main"
+  status = 200 # This makes it act like a rewrite, not a 301/302 redirect
